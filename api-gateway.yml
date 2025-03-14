@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: book-service-route
+          uri: lb://book-service # Use service discovery to locate the Book Service
+          predicates:
+            - Path=/books/** # Route requests with /books/** to the Book Service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Register with Eureka Server
