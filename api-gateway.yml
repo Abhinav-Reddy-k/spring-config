@@ -3,14 +3,23 @@ server:
 
 spring:
   cloud:
+    discovery:
+      enabled: true
     gateway:
+      discovery:
+        locator:
+          enabled: true # Enable service discovery for routing
       routes:
         - id: book-service-route
           uri: lb://book-service # Use service discovery to locate the Book Service
           predicates:
-            - Path=/books/** # Route requests with /books/** to the Book Service
+            - Path=/api/books/** # Route requests with /books/** to the Book Service
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/ # Register with Eureka Server
+    register-with-eureka: true
+    fetch-registry: true # Fetch registry from Eureka Server
